@@ -1,0 +1,39 @@
+﻿@inject IDb1Service Db1Service
+
+<table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Артикул</th>
+                <th>Количество</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!_items.Any())
+            {
+                <tr>
+                    <td colspan="2">Нет данных</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var p in _items)
+                {
+                    <tr>
+                        <td>@p.Article</td>
+                        <td>@p.Quantity</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+@code {
+    private IEnumerable<ProductCountDto> _items = new List<ProductCountDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _items = await Db1Service.GetProductQuantity();
+    }
+
+}

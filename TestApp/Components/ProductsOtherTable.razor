@@ -1,0 +1,12 @@
+﻿@inject IDb2Service Db2Service;
+
+<Table Products="_products"/>
+
+@code {
+    private IEnumerable<ProductDto>? _products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _products = await Db2Service.GetOtherProducts();
+    }
+}
