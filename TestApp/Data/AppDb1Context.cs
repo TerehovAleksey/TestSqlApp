@@ -13,9 +13,9 @@ namespace TestApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.ApplyConfiguration(new ProductNameConfiguration());
-            // modelBuilder.ApplyConfiguration(new ProductAmountConfiguration());
-            // modelBuilder.ApplyConfiguration(new ProductPriceConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductNameConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductAmountConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductPriceConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 

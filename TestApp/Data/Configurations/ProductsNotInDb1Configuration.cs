@@ -4,12 +4,12 @@ using TestApp.Models;
 
 namespace TestApp.Data.Configurations
 {
-    public class ProductsConfiguration : IEntityTypeConfiguration<Product>
+    public class ProductsNotInDb1Configuration : IEntityTypeConfiguration<ProductNotInDb1>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<ProductNotInDb1> builder)
         {
-            builder.ToTable("Products")
-                .HasKey(x => x.Id);
+            builder.ToTable("Tab2")
+                .HasAlternateKey(x => x.Id);
 
             builder.Property(x => x.Article)
                 .IsRequired();

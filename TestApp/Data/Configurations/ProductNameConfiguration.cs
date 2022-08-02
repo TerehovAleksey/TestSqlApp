@@ -10,10 +10,12 @@ namespace TestApp.Data.Configurations
         {
             builder.ToTable("Names")
                 .HasKey(x => x.Id);
+            
+            builder.Property(x => x.Article)
+                .IsRequired();
 
             builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(250);
+                .IsRequired();
         }
     }
 }

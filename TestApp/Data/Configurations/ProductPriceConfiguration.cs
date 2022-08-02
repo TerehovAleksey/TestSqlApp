@@ -10,10 +10,13 @@ namespace TestApp.Data.Configurations
         {
             builder.ToTable("Prices")
                 .HasKey(x => x.Id);
+            
+            builder.Property(x => x.Article)
+                .IsRequired();
 
             builder.Property(x => x.Price)
-            .IsRequired()
-            .HasColumnType("MONEY");
+                .IsRequired()
+                .HasColumnType("REAL");
         }
     }
 }

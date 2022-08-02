@@ -20,6 +20,8 @@ public interface IProductService
     public Task<IEnumerable<ProductDto>> GetProducts();
     public Task<IEnumerable<ProductDto>> GetNotInDb1Products();
     public Task<IEnumerable<ProductDto>> GetOtherProducts();
+    public Task<IEnumerable<ProductDto>> FillNotInDb1Products();
+    public Task<IEnumerable<ProductDto>> FillOtherProducts();
 
     #endregion
 }

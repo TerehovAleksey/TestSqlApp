@@ -3,5 +3,5 @@
 public class ProductBase
 {
     public int Id { get; set; }
-    public string Article { get; set; } = default!;
+    public int Article { get; set; }
 }
