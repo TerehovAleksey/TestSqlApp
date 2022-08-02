@@ -10,6 +10,9 @@ namespace TestApp.Data.Configurations
         {
             builder.ToTable("Amounts")
                 .HasKey(x => x.Id);
+            
+            builder.Property(x => x.Article)
+                .IsRequired();
 
             builder.Property(x => x.Quantity)
             .IsRequired();

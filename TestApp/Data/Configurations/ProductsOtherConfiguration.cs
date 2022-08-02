@@ -4,11 +4,11 @@ using TestApp.Models;
 
 namespace TestApp.Data.Configurations
 {
-    public class ProductsConfiguration : IEntityTypeConfiguration<Product>
+    public class ProductsOtherConfiguration : IEntityTypeConfiguration<ProductOther>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<ProductOther> builder)
         {
-            builder.ToTable("Products")
+            builder.ToTable("Tab1")
                 .HasKey(x => x.Id);
 
             builder.Property(x => x.Article)

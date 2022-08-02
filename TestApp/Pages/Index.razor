@@ -1,20 +1,94 @@
 ﻿@page "/"
+@inject IProductService ProductService;
 
 <PageTitle>Index</PageTitle>
 
+<button class="btn btn-primary" @onclick="GenerateFakeData">Заполнить таблицы</button>
+<button class="btn btn-warning" @onclick="ClearData">Очистить таблицы</button>
 <div class="container">
     <h1>Таблицы БД1</h1>
-    <NameTable />
-    <AmountTable />
-    <PriceTable />
+    <div class="d-flex justify-content-between">
+        <div>
+            <NameTable Items="_names"/>
+        </div>
+        <div>
+            <AmountTable Items="_quantities"/>
+        </div>
+        <div>
+            <PriceTable Items="_prices"/>
+        </div>
+    </div>
 </div>
 <hr/>
 <div class="container">
     <h1>Таблицы БД2</h1>
     <h2>БД 2 основная таблица</h2>
-    <ProductTable/>
-    <h2>то, что не вошло в БД1</h2>
-    <ProductsNotInDb1Table/>
-    <h2>то, что осталось</h2>
-    <ProductsOtherTable/>
+    <ProductTable Products="_products"/>
 </div>
+<button class="btn btn-info" @onclick="CompareData">Сравнить базы данных</button>
+<div class="container">
+    <h2>то, что не вошло в БД1</h2>
+    <ProductTable Products="_productsNotInDb1"/>
+    <h2>то, что осталось</h2>
+    <ProductTable Products="_productsOther"/>
+</div>
+
+
+@code{
+
+    private IEnumerable<ProductNameDto>? _names;
+    private IEnumerable<ProductPriceDto>? _prices;
+    private IEnumerable<ProductCountDto>? _quantities;
+
+    private IEnumerable<ProductDto>? _products;
+    private IEnumerable<ProductDto>? _productsNotInDb1;
+    private IEnumerable<ProductDto>? _productsOther;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        _names = await ProductService.GetProductNames();
+        _quantities = await ProductService.GetProductQuantity();
+        _prices = await ProductService.GetProductPrices();
+
+        _products = await ProductService.GetProducts();
+        _productsNotInDb1 = await ProductService.GetNotInDb1Products();
+        _productsOther = await ProductService.GetOtherProducts();
+    }
+
+    private async Task GenerateFakeData()
+    {
+        var result = await ProductService.GenerateFakeData();
+        if (result)
+        {
+            await LoadData();
+        }
+    }
+
+    private async Task ClearData()
+    {
+        await ProductService.ClearTables();
+        ClearTables();
+    }
+
+    private async Task CompareData()
+    {
+        _productsNotInDb1 = await ProductService.FillNotInDb1Products();
+        _productsOther = await ProductService.FillOtherProducts();
+    }
+
+    private void ClearTables()
+    {
+        _names = new List<ProductNameDto>();
+        _prices = new List<ProductPriceDto>();
+        _products = new List<ProductDto>();
+        _quantities = new List<ProductCountDto>();
+        _productsOther = new List<ProductDto>();
+        _productsNotInDb1 = new List<ProductDto>();
+    }
+
+}

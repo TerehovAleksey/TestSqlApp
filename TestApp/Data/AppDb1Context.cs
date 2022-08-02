@@ -8,9 +8,9 @@ namespace TestApp.Data
     {
         public AppDb1Context(DbContextOptions<AppDb1Context> options) : base(options)
         {
-
+            Database.EnsureCreated();
         }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProductNameConfiguration());

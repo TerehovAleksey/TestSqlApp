@@ -4,10 +4,12 @@ using TestApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContextFactory<AppDb1Context>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Db1Connection")));
-builder.Services.AddDbContextFactory<AppDb2Context>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("Db2Connection")));
-builder.Services.AddScoped<IDb1Service, Db1Service>();
-builder.Services.AddScoped<IDb2Service, Db2Service>();
+builder.Services.AddDbContextFactory<AppDb1Context>(opt => 
+    opt.UseSqlite("Data Source = DB1.db"));
+builder.Services.AddDbContextFactory<AppDb2Context>(opt => 
+    opt.UseSqlite("Data Source = DB2.db"));
+
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
