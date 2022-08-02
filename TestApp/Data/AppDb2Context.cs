@@ -8,12 +8,12 @@ namespace TestApp.Data
     {
         public AppDb2Context(DbContextOptions<AppDb2Context> options) : base(options)
         {
-
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ProductsConfiguration());
+           // modelBuilder.ApplyConfiguration(new ProductsConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 

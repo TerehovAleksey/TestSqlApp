@@ -1,20 +1,72 @@
 ﻿@page "/"
+@inject IProductService ProductService;
 
 <PageTitle>Index</PageTitle>
 
+<button class="btn btn-primary" @onclick="GenerateFakeData">Заполнить таблицы</button>
+<button class="btn btn-primary" @onclick="ClearData">Очистить таблицы</button>
 <div class="container">
     <h1>Таблицы БД1</h1>
-    <NameTable />
-    <AmountTable />
-    <PriceTable />
+    <div class="d-flex justify-content-between">
+        <div>
+           <NameTable Items="_names" /> 
+        </div>
+        <div>
+            <AmountTable Items="_quantities"/>
+        </div>
+        <div>
+            <PriceTable Items="_prices"/>
+        </div>
+    </div>
 </div>
 <hr/>
 <div class="container">
     <h1>Таблицы БД2</h1>
     <h2>БД 2 основная таблица</h2>
-    <ProductTable/>
-    <h2>то, что не вошло в БД1</h2>
-    <ProductsNotInDb1Table/>
-    <h2>то, что осталось</h2>
-    <ProductsOtherTable/>
+    <div>
+        <ProductTable Products="_products"/>
+    </div>
+    @* <h2>то, что не вошло в БД1</h2> *@
+    @* <ProductsNotInDb1Table/> *@
+    @* <h2>то, что осталось</h2> *@
+    @* <ProductsOtherTable/> *@
 </div>
+
+@code{
+    
+    private IEnumerable<ProductNameDto>? _names;
+    private IEnumerable<ProductPriceDto>? _prices;
+    private IEnumerable<ProductCountDto>? _quantities;
+
+    private IEnumerable<ProductDto>? _products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        _names = await ProductService.GetProductNames();
+        _quantities = await ProductService.GetProductQuantity();
+        _prices = await ProductService.GetProductPrices();
+
+        _products = await ProductService.GetProducts();
+    }
+
+    private async Task GenerateFakeData()
+    {
+        var result = await ProductService.GenerateFakeData();
+        if (result)
+        {
+            await LoadData();
+        }
+    }
+
+    private async Task ClearData()
+    {
+        await ProductService.ClearTables();
+        await LoadData();
+    }
+
+}

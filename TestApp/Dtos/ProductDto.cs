@@ -1,7 +1,7 @@
 ﻿namespace TestApp.Dtos;
 
-public record ProductNameDto(Guid Article, string Name);
-public record ProductPriceDto(Guid Article, decimal Price);
-public record ProductCountDto(Guid Article, int Quantity);
+public record ProductNameDto(string Article, string Name);
+public record ProductPriceDto(string Article, decimal Price);
+public record ProductCountDto(string Article, int Quantity);
 
-public record ProductDto(Guid Article, string Name, int Quantity, decimal Price);
+public record ProductDto(string Article, string Name, int Quantity, decimal Price);

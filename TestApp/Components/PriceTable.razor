@@ -1,39 +1,40 @@
-﻿@inject IDb1Service Db1Service
-
-<table class="table table-sm">
-        <thead>
+﻿<table class="table table-sm" style="min-width: 350px;">
+    <thead class="table-dark">
+    <tr>
+        <th>Артикул</th>
+        <th>Стоимость</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Items is null)
+    {
+        <tr>
+            <td colspan="2">Загрузка...</td>
+        </tr>
+    }
+    else if (!Items.Any())
+    {
+        <tr>
+            <td colspan="2">Нет данных</td>
+        </tr>
+    }
+    else
+    {
+        foreach (var p in Items)
+        {
             <tr>
-                <th>Артикул</th>
-                <th>Стоимость</th>
+                <td>@p.Article</td>
+                <td>@p.Price</td>
             </tr>
-        </thead>
-        <tbody>
-            @if (!_items.Any())
-            {
-                <tr>
-                    <td colspan="2">Нет данных</td>
-                </tr>
-            }
-            else
-            {
-                foreach (var p in _items)
-                {
-                    <tr>
-                        <td>@p.Article</td>
-                        <td>@p.Price</td>
-                    </tr>
-                }
-            }
+        }
+    }
 
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
 @code {
-    private IEnumerable<ProductPriceDto> _items = new List<ProductPriceDto>();
 
-    protected override async Task OnInitializedAsync()
-    {
-        _items = await Db1Service.GetProductPrices();
-    }
+    [Parameter, EditorRequired]
+    public IEnumerable<ProductPriceDto>? Items { get; set; }
 
 }
